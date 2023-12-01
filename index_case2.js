@@ -1,3 +1,5 @@
+// Case 2: Translate from Traditional Mongolian Script to Cryllic.
+
 const http = require("http");
 const fs = require("fs");
 const axios = require("axios");
@@ -7,22 +9,22 @@ const cheerio = require("cheerio");
 function sendingDataGenerator(translateText) {
   var data = new FormData();
   data.append("__EVENTTARGET", "ButtonTran_ID");
-  data.append("__VIEWSTATEGENERATOR", "37EAF2C1");
+  data.append("__VIEWSTATEGENERATOR", "0CA142A3");
   data.append(
     "__VIEWSTATE",
-    "/wEPDwUKLTUyNDYzNDUxMg9kFgICAw9kFgICAQ9kFgQCCw8PFgIeBFRleHQFI+GguuGgouGgt+GgouGgryDhoK7hoKPhoKnhoK3hoKPhoK8gZGQCEA8PZBYCHgdvbmNsaWNrBTp0aGlzLnN0eWxlLmRpc3BsYXk9J25vbmUnO19fZG9Qb3N0QmFjaygnQnV0dG9uVHJhbl9JRCcsJycpZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAgURQnV0dG9uVHJhbl9JREJhY2sFDUJ1dHRvblRyYW5fSUR9LrII9WwHWhCJS2rxR11t2h4YGeD5992b6LrRBq4COw=="
+    "/wEPDwUKLTU0MDgxNTc1MA9kFgICAw9kFgICAQ9kFgICDQ8PZBYCHgdvbmNsaWNrBTp0aGlzLnN0eWxlLmRpc3BsYXk9J25vbmUnO19fZG9Qb3N0QmFjaygnQnV0dG9uVHJhbl9JRCcsJycpZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAgURQnV0dG9uVHJhbl9JREJhY2sFDUJ1dHRvblRyYW5fSUQGDwUE9cPGHkfHxLaRkbEgaHOy24VV4oA9wbZ5FgS1BA=="
   );
   data.append("inputCyrillic_ID", translateText);
   data.append(
     "__EVENTVALIDATION",
-    "/wEdAAS0QQN87QPXK2Cp61whLiHWTaw2keI+7zV+INMO8AHzSQZ3vlKzFeGVmucoi/jui39IVceNMMGqwJrd1g+m3LB9ihX8AsL4qXIxQ6FAv+KIpZ5qEtV2Ldz3AeDkNF9Bz30="
+    "/wEdAAVUWO+Bh6HcoptvY4NweXM3Taw2keI+7zV+INMO8AHzSUHIbZyaqTF+z9onQgXSv3QGd75SsxXhlZrnKIv47ot/SFXHjTDBqsCa3dYPptywfRCbeLl7GSONZtwwpHNdiNaFFw5f99UPNT7TTOhkWt9j"
   );
   data.append("ButtonTran_ID.x", "98");
   data.append("ButtonTran_ID.y", "577");
 
   var config = {
     method: "post",
-    url: "http://trans.mglip.com/EnglishC2T.aspx",
+    url: "http://trans.mglip.com/ChineseT2C.aspx",
     headers: {
       ...data.getHeaders(),
     },
@@ -55,12 +57,12 @@ function writeFiles(dirname, filename, content) {
       const $ = cheerio.load(response.data);
       let myTranslatedText = $("#outPutTraditonalM_ID").text();
       console.log(myTranslatedText);
-      fs.writeFile(dirname+"/"+filename, myTranslatedText, function(err) {
-        if(err) {
-            return console.log(err);
+      fs.writeFile(dirname + "/" + filename, myTranslatedText, function (err) {
+        if (err) {
+          return console.log(err);
         }
         console.log("The file was saved!");
-    }); 
+      });
     })
     .catch(function (error) {
       console.log(error);
@@ -70,11 +72,11 @@ function writeFiles(dirname, filename, content) {
 http
   .createServer(function (req, res) {
     res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Hello World!");
+    res.end("Case 2: Translate from Traditional Mongolian Script to Cryllic");
     readFiles(
-      "read/",
+      "read_case2/",
       function (filename, content) {
-        writeFiles("write", filename, content);
+        writeFiles("write_case2", filename, content);
       },
       function (err) {
         throw err;
